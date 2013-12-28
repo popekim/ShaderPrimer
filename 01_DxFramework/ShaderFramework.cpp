@@ -2,9 +2,8 @@
 //
 // ShaderFramework.cpp
 // 
-// 쉐이더 데모를 위한 C스타일의 초간단 프레임워크입니다.
-// (실제 게임을 코딩하실 때는 절대 이렇게 프레임워크를
-// 작성하시면 안됩니다. -_-)
+// Super simple C-style framework for Shader Demo
+// (NEVER ever write framework like this when you are making real games.)
 //
 // Author: Pope Kim
 //
@@ -15,46 +14,46 @@
 
 
 //----------------------------------------------------------------------
-// 전역변수
+// Globals
 //----------------------------------------------------------------------
 
-// D3D 관련
-LPDIRECT3D9             gpD3D = NULL;				// D3D
-LPDIRECT3DDEVICE9       gpD3DDevice = NULL;			// D3D 장치
+// D3D-related
+LPDIRECT3D9             gpD3D = NULL;					// D3D
+LPDIRECT3DDEVICE9       gpD3DDevice = NULL;				// D3D device
 
-// 폰트
+// Fonts
 ID3DXFont*              gpFont = NULL;
 
-// 모델
+// Models
 
-// 쉐이더
+// Shaders
 
-// 텍스처
+// Textures
 
-// 프로그램 이름
-const char*				gAppName = "초간단 쉐이더 데모 프레임워크";
+// Application name
+const char*				gAppName = "Super Simple Shader Demo Framework";
 
 
 //-----------------------------------------------------------------------
-// 프로그램 진입점/메시지 루프
+// Application entry point/message loop
 //-----------------------------------------------------------------------
 
-// 진입점
+// entry point
 INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, INT)
 {
-	// 윈도우 클래스를 등록한다.
+	// register windows class
 	WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, MsgProc, 0L, 0L,
 		GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
 		gAppName, NULL };
 	RegisterClassEx(&wc);
 
-	// 프로그램 창을 생성한다.
+	// creates program window
 	DWORD style = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
 	HWND hWnd = CreateWindow(gAppName, gAppName,
 		style, CW_USEDEFAULT, 0, WIN_WIDTH, WIN_HEIGHT,
 		GetDesktopWindow(), NULL, wc.hInstance, NULL);
 
-	// Client Rect 크기가 WIN_WIDTH, WIN_HEIGHT와 같도록 크기를 조정한다.
+	// Client Rect size will be same as WIN_WIDTH and WIN_HEIGHT
 	POINT ptDiff;
 	RECT rcClient, rcWindow;
 
@@ -67,11 +66,11 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, INT)
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
 	UpdateWindow(hWnd);
 
-	// D3D를 비롯한 모든 것을 초기화한다.
+	// Initialize everything including D3D
 	if (!InitEverything(hWnd))
 		PostQuitMessage(1);
 
-	// 메시지 루프
+	// Message loop
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));
 	while (msg.message != WM_QUIT)
@@ -81,7 +80,7 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, INT)
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		else // 메시지가 없으면 게임을 업데이트하고 장면을 그린다
+		else // If there's no message to handle, update and draw the game
 		{
 			PlayDemo();
 		}
@@ -91,7 +90,7 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, INT)
 	return 0;
 }
 
-// 메시지 처리기
+// Message handler
 LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
@@ -109,12 +108,12 @@ LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
-// 키보드 입력처리
+// Keyboard input handler
 void ProcessInput(HWND hWnd, WPARAM keyPress)
 {
 	switch (keyPress)
 	{
-		// ESC 키가 눌리면 프로그램을 종료한다.
+		// when ESC key is pressed, quit the demo
 	case VK_ESCAPE:
 		PostMessage(hWnd, WM_DESTROY, 0L, 0L);
 		break;
@@ -122,7 +121,7 @@ void ProcessInput(HWND hWnd, WPARAM keyPress)
 }
 
 //------------------------------------------------------------
-// 게임루프
+// game loop
 //------------------------------------------------------------
 void PlayDemo()
 {
@@ -130,25 +129,25 @@ void PlayDemo()
 	RenderFrame();
 }
 
-// 게임로직 업데이트
+// Game logic update
 void Update()
 {
 }
 
 //------------------------------------------------------------
-// 렌더링
+// Rendering
 //------------------------------------------------------------
 
 void RenderFrame()
 {
-	D3DCOLOR bgColour = 0xFF0000FF;	// 배경색상 - 파랑
+	D3DCOLOR bgColour = 0xFF0000FF;	// background colour - blue
 
 	gpD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), bgColour, 1.0f, 0);
 
 	gpD3DDevice->BeginScene();
 	{
-		RenderScene();				// 3D 물체등을 그린다.
-		RenderInfo();				// 디버그 정보 등을 출력한다.
+		RenderScene();				// draw 3D objects and so on
+		RenderInfo();				// show debug info
 	}
 	gpD3DDevice->EndScene();
 
@@ -156,46 +155,46 @@ void RenderFrame()
 }
 
 
-// 3D 물체등을 그린다.
+// draw 3D objects and so on
 void RenderScene()
 {
 }
 
-// 디버그 정보 등을 출력.
+// show debug info
 void RenderInfo()
 {
-	// 텍스트 색상
+	// text colour
 	D3DCOLOR fontColor = D3DCOLOR_ARGB(255, 255, 255, 255);
 
-	// 텍스트를 출력할 위치
+	// location to show the text
 	RECT rct;
 	rct.left = 5;
 	rct.right = WIN_WIDTH / 3;
 	rct.top = 5;
 	rct.bottom = WIN_HEIGHT / 3;
 
-	// 키 입력 정보를 출력
-	gpFont->DrawText(NULL, "데모 프레임워크\n\nESC: 데모종료", -1, &rct, 0, fontColor);
+	// show debug keys
+	gpFont->DrawText(NULL, "Demo Framework\n\nESC: Quit demo", -1, &rct, 0, fontColor);
 }
 
 //------------------------------------------------------------
-// 초기화 코드
+// intialization code
 //------------------------------------------------------------
 bool InitEverything(HWND hWnd)
 {
-	// D3D를 초기화
+	// init D3D
 	if (!InitD3D(hWnd))
 	{
 		return false;
 	}
 
-	// 모델, 쉐이더, 텍스처등을 로딩
+	// loading models, shadsers and textures
 	if (!LoadAssets())
 	{
 		return false;
 	}
 
-	// 폰트를 로딩
+	// load fonts
 	if (FAILED(D3DXCreateFont(gpD3DDevice, 20, 10, FW_BOLD, 1, FALSE, DEFAULT_CHARSET,
 		OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, (DEFAULT_PITCH | FF_DONTCARE),
 		"Arial", &gpFont)))
@@ -206,17 +205,17 @@ bool InitEverything(HWND hWnd)
 	return true;
 }
 
-// D3D 객체 및 장치 초기화
+// D3D and device initialization
 bool InitD3D(HWND hWnd)
 {
-	// D3D 객체
+	// D3D
 	gpD3D = Direct3DCreate9(D3D_SDK_VERSION);
 	if (!gpD3D)
 	{
 		return false;
 	}
 
-	// D3D장치를 생성하는데 필요한 구조체를 채워넣는다.
+	// fill in the strcture needed to create a D3D device
 	D3DPRESENT_PARAMETERS d3dpp;
 	ZeroMemory(&d3dpp, sizeof(d3dpp));
 
@@ -235,7 +234,7 @@ bool InitD3D(HWND hWnd)
 	d3dpp.FullScreen_RefreshRateInHz = 0;
 	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_ONE;
 
-	// D3D장치를 생성한다.
+	// create D3D device
 	if (FAILED(gpD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
 		D3DCREATE_HARDWARE_VERTEXPROCESSING,
 		&d3dpp, &gpD3DDevice)))
@@ -248,16 +247,16 @@ bool InitD3D(HWND hWnd)
 
 bool LoadAssets()
 {
-	// 텍스처 로딩
+	// texture loading
 
-	// 쉐이더 로딩
+	// shader loading
 
-	// 모델 로딩
+	// model loading
 
 	return true;
 }
 
-// 쉐이더 로딩
+// shader loading
 LPD3DXEFFECT LoadShader(const char * filename)
 {
 	LPD3DXEFFECT ret = NULL;
@@ -272,8 +271,8 @@ LPD3DXEFFECT LoadShader(const char * filename)
 	D3DXCreateEffectFromFile(gpD3DDevice, filename,
 		NULL, NULL, dwShaderFlags, NULL, &ret, &pError);
 
-	// 쉐이더 로딩에 실패한 경우 output창에 쉐이더
-	// 컴파일 에러를 출력한다.
+	// if failed at loading shaders, display compile error
+	// to output window
 	if (!ret && pError)
 	{
 		int size = pError->GetBufferSize();
@@ -291,13 +290,13 @@ LPD3DXEFFECT LoadShader(const char * filename)
 	return ret;
 }
 
-// 모델 로딩
+// loading models
 LPD3DXMESH LoadModel(const char * filename)
 {
 	LPD3DXMESH ret = NULL;
 	if (FAILED(D3DXLoadMeshFromX(filename, D3DXMESH_SYSTEMMEM, gpD3DDevice, NULL, NULL, NULL, NULL, &ret)))
 	{
-		OutputDebugString("모델 로딩 실패: ");
+		OutputDebugString("failed at loading a model: ");
 		OutputDebugString(filename);
 		OutputDebugString("\n");
 	};
@@ -305,13 +304,13 @@ LPD3DXMESH LoadModel(const char * filename)
 	return ret;
 }
 
-// 텍스처 로딩
+// loading textures
 LPDIRECT3DTEXTURE9 LoadTexture(const char * filename)
 {
 	LPDIRECT3DTEXTURE9 ret = NULL;
 	if (FAILED(D3DXCreateTextureFromFile(gpD3DDevice, filename, &ret)))
 	{
-		OutputDebugString("텍스처 로딩 실패: ");
+		OutputDebugString("failed at loading a texture: ");
 		OutputDebugString(filename);
 		OutputDebugString("\n");
 	}
@@ -319,25 +318,25 @@ LPDIRECT3DTEXTURE9 LoadTexture(const char * filename)
 	return ret;
 }
 //------------------------------------------------------------
-// 뒷정리 코드.
+// cleanup code
 //------------------------------------------------------------
 
 void Cleanup()
 {
-	// 폰트를 release 한다.
+	// release fonts
 	if (gpFont)
 	{
 		gpFont->Release();
 		gpFont = NULL;
 	}
 
-	// 모델을 release 한다.
+	// release models
 
-	// 쉐이더를 release 한다.
+	// release shaders
 
-	// 텍스처를 release 한다.
+	// release textures
 
-	// D3D를 release 한다.
+	// release D3D
 	if (gpD3DDevice)
 	{
 		gpD3DDevice->Release();
