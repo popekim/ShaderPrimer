@@ -1,4 +1,4 @@
-ShaderPrimerKR
-==============
+ShaderPrimer
+============
 
-Source Code for the Korean version of Shader Programming Primer Book. 
+Source Code Samples for Shader Primer Book
