@@ -140,9 +140,9 @@ void Update()
 
 void RenderFrame()
 {
-	D3DCOLOR bgColour = 0xFF0000FF;	// background colour - blue
+	D3DCOLOR bgColor = 0xFF0000FF;	// background color - blue
 
-	gpD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), bgColour, 1.0f, 0);
+	gpD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), bgColor, 1.0f, 0);
 
 	gpD3DDevice->BeginScene();
 	{
@@ -163,7 +163,7 @@ void RenderScene()
 // show debug info
 void RenderInfo()
 {
-	// text colour
+	// text color
 	D3DCOLOR fontColor = D3DCOLOR_ARGB(255, 255, 255, 255);
 
 	// location to show the text
@@ -178,7 +178,7 @@ void RenderInfo()
 }
 
 //------------------------------------------------------------
-// intialization code
+// initialization code
 //------------------------------------------------------------
 bool InitEverything(HWND hWnd)
 {
@@ -188,7 +188,7 @@ bool InitEverything(HWND hWnd)
 		return false;
 	}
 
-	// loading models, shadsers and textures
+	// loading models, shaders and textures
 	if (!LoadAssets())
 	{
 		return false;

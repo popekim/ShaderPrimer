@@ -57,7 +57,7 @@ float					gRotationY = 0.0f;
 // world position of the light
 D3DXVECTOR4				gWorldLightPosition(500.0f, 500.0f, -500.0f, 1.0f);
 
-// the colour of light
+// the color of light
 D3DXVECTOR4				gLightColor(0.7f, 0.7f, 1.0f, 1.0f);
 
 // world position of the camera
@@ -187,9 +187,9 @@ void Update()
 
 void RenderFrame()
 {
-	D3DCOLOR bgColour = 0xFF0000FF;	// background colour - blue
+	D3DCOLOR bgColor = 0xFF0000FF;	// background color - blue
 
-	gpD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), bgColour, 1.0f, 0);
+	gpD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), bgColor, 1.0f, 0);
 
 	gpD3DDevice->BeginScene();
 	{
@@ -338,7 +338,7 @@ void RenderScene()
 // display debug info
 void RenderInfo()
 {
-	// text colour
+	// text color
 	D3DCOLOR fontColor = D3DCOLOR_ARGB(255, 255, 255, 255);
 
 	// location to display the text
@@ -349,7 +349,7 @@ void RenderInfo()
 	rct.bottom = WIN_HEIGHT / 3;
 
 	// display debug key info
-	gpFont->DrawText(NULL, "Demo Framework\n\nESC: Exit\n1: Colour\n2: Black and White\n3: Sepia\n4: Edge Detection\n5: Emboss", -1, &rct, 0, fontColor);
+	gpFont->DrawText(NULL, "Demo Framework\n\nESC: Exit\n1: Color\n2: Black and White\n3: Sepia\n4: Edge Detection\n5: Emboss", -1, &rct, 0, fontColor);
 }
 
 //------------------------------------------------------------

@@ -167,9 +167,9 @@ void Update()
 
 void RenderFrame()
 {
-	D3DCOLOR bgColour = 0xFF0000FF;	// background colour - blue
+	D3DCOLOR bgColor = 0xFF0000FF;	// background color - blue
 
-	gpD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), bgColour, 1.0f, 0);
+	gpD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), bgColor, 1.0f, 0);
 
 	gpD3DDevice->BeginScene();
 	{
@@ -342,7 +342,7 @@ void RenderScene()
 // display debug info
 void RenderInfo()
 {
-	// text colour
+	// text color
 	D3DCOLOR fontColor = D3DCOLOR_ARGB(255, 255, 255, 255);
 
 	// location to display the text
