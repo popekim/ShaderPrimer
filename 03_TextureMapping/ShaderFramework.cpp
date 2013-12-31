@@ -23,7 +23,7 @@
 // Global variables
 //----------------------------------------------------------------------
 
-// D3D ฐüทร
+// D3D-related
 LPDIRECT3D9             gpD3D = NULL;					// D3D
 LPDIRECT3DDEVICE9       gpD3DDevice = NULL;				// D3D device
 
