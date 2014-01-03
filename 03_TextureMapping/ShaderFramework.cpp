@@ -180,7 +180,7 @@ void RenderScene()
 	D3DXMATRIXA16			matProjection;
 	D3DXMatrixPerspectiveFovLH(&matProjection, FOV, ASPECT_RATIO, NEAR_PLANE, FAR_PLANE);
 
-	// for each frame, we roate 0.4 degree
+	// for each frame, we rotate 0.4 degree
 	gRotationY += 0.4f * PI / 180.0f;
 	if (gRotationY > 2 * PI)
 	{
