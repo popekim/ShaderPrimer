@@ -51,7 +51,7 @@ float					gRotationY = 0.0f;
 // world position of the light
 D3DXVECTOR4				gWorldLightPosition(500.0f, 500.0f, -500.0f, 1.0f);
 
-// ºûÀÇ »ö»ó
+// light color
 D3DXVECTOR4				gLightColor(0.7f, 0.7f, 1.0f, 1.0f);
 
 // world position of the camera

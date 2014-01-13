@@ -53,11 +53,11 @@ D3DXVECTOR4				gWorldLightPosition(500.0f, 500.0f, -500.0f, 1.0f);
 // world position of the camera
 D3DXVECTOR4				gWorldCameraPosition(0.0f, 0.0f, -200.0f, 1.0f);
 
-// ¹°Ã¼ÀÇ »ö»ó
+// objects' colors
 D3DXVECTOR4				gTorusColor(1, 1, 0, 1);
 D3DXVECTOR4				gDiscColor(0, 1, 1, 1);
 
-// ±×¸²ÀÚ¸Ê ·»´õÅ¸±ê
+// shadowmap render targets
 LPDIRECT3DTEXTURE9		gpShadowRenderTarget = NULL;
 LPDIRECT3DSURFACE9		gpShadowDepthStencil = NULL;
 

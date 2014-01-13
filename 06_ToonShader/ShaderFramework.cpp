@@ -45,10 +45,10 @@ const char*				gAppName = "Super Simple Shader Demo Framework";
 // Rotation around UP vector
 float					gRotationY = 0.0f;
 
-// 광원의 위치
+// Light Position
 D3DXVECTOR4				gWorldLightPosition = D3DXVECTOR4(500.0f, 500.0f, -500.0f, 1.0f);
 
-// 표면의 색상
+// Surface Color
 D3DXVECTOR4				gSurfaceColor = D3DXVECTOR4(0, 1, 0, 1);
 
 //-----------------------------------------------------------------------
