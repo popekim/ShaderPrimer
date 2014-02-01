@@ -53,7 +53,7 @@ D3DXVECTOR4				gWorldLightPosition(500.0f, 500.0f, -500.0f, 1.0f);
 // world position of the camera
 D3DXVECTOR4				gWorldCameraPosition(0.0f, 0.0f, -200.0f, 1.0f);
 
-// objects' colors
+// object colors
 D3DXVECTOR4				gTorusColor(1, 1, 0, 1);
 D3DXVECTOR4				gDiscColor(0, 1, 1, 1);
 
@@ -242,7 +242,7 @@ void RenderScene()
 		D3DXMatrixMultiply(&matDiscWorld, &matScale, &matTrans);
 	}
 
-	// current hardware backbuffer¿Í ±íÀÌ¹öÆÛ
+	// current hardware backbuffer and depth buffer
 	LPDIRECT3DSURFACE9 pHWBackBuffer = NULL;
 	LPDIRECT3DSURFACE9 pHWDepthStencilBuffer = NULL;
 	gpD3DDevice->GetRenderTarget(0, &pHWBackBuffer);
@@ -270,7 +270,7 @@ void RenderScene()
 	gpCreateShadowShader->SetMatrix("gLightViewMatrix", &matLightView);
 	gpCreateShadowShader->SetMatrix("gLightProjectionMatrix", &matLightProjection);
 
-	// being CreateShadow shader
+	// begin CreateShadow shader
 	{
 		UINT numPasses = 0;
 		gpCreateShadowShader->Begin(&numPasses, NULL);
