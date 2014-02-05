@@ -98,10 +98,10 @@ VS_OUTPUT UVAnimation_Pass_0_Vertex_Shader_vs_main(VS_INPUT Input)
 	Output.mPosition = mul(Input.mPosition, gWorldMatrix);
 
 	float3 lightDir = Output.mPosition.xyz - gWorldLightPosition.xyz;
+	float3 lightDirUnnorm = lightDir;
 	lightDir = normalize(lightDir);
 
-	float3 viewDir = normalize(Output.mPosition.xyz - gWorldCameraPosition.xyz);
-	Output.mViewDir = viewDir;
+	Output.mViewDir = Output.mPosition.xyz - gWorldCameraPosition.xyz;
 
 	Output.mPosition = mul(Output.mPosition, gViewMatrix);
 	Output.mPosition = mul(Output.mPosition, gProjectionMatrix);
@@ -110,7 +110,7 @@ VS_OUTPUT UVAnimation_Pass_0_Vertex_Shader_vs_main(VS_INPUT Input)
 	worldNormal = normalize(worldNormal);
 
 	Output.mDiffuse = dot(-lightDir, worldNormal);
-	Output.mReflection = reflect(lightDir, worldNormal);
+	Output.mReflection = reflect(lightDirUnnorm, worldNormal);
 
 	Output.mUV = Input.mUV + float2(gTime * gUVSpeed, 0);
 

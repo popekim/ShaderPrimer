@@ -982,7 +982,7 @@
       <RmRegistryBranch NAME="Effect Workspace.EnvironmentMapping" API="" XML_VERSION="RenderMonkey 1.71">
        <RmRegistryBranch NAME="Disassembly" API="" XML_VERSION="RenderMonkey 1.71"/>
        <RmStringVariable NAME="Editing Shader" API="" ARTIST_EDITABLE="FALSE" VARIABLE_SEMANTIC=""><RmTextDataBlock TYPE="TEXT"><![CDATA[
-Pixel Shader]]></RmTextDataBlock></RmStringVariable>
+Vertex Shader]]></RmTextDataBlock></RmStringVariable>
        <RmStringVariable NAME="Editing Pass" API="" ARTIST_EDITABLE="FALSE" VARIABLE_SEMANTIC=""><RmTextDataBlock TYPE="TEXT"><![CDATA[
 Pass 0]]></RmTextDataBlock></RmStringVariable>
        <RmIntegerVariable NAME="Y" API="" ARTIST_EDITABLE="FALSE" VARIABLE_SEMANTIC="" VALUE="63" MIN="-10" MAX="10" CLAMP="FALSE"/>
@@ -1032,13 +1032,13 @@ Pass 0]]></RmTextDataBlock></RmStringVariable>
     </RmRegistryBranch>
     <RmRegistryBranch NAME="WORKSPACE" API="" XML_VERSION="RenderMonkey 1.71">
      <RmStringVariable NAME="LAST_SAVE" API="" ARTIST_EDITABLE="FALSE" VARIABLE_SEMANTIC=""><RmTextDataBlock TYPE="TEXT"><![CDATA[
-28/12/2010 16:6:27]]></RmTextDataBlock></RmStringVariable>
+5/2/2014 12:46:56]]></RmTextDataBlock></RmStringVariable>
      <RmStringVariable NAME="VERSION" API="" ARTIST_EDITABLE="FALSE" VARIABLE_SEMANTIC=""><RmTextDataBlock TYPE="TEXT"><![CDATA[
 RenderMonkey Version 1.82 (build 322)]]></RmTextDataBlock></RmStringVariable>
      <RmStringVariable NAME="XML_VERSION" API="" ARTIST_EDITABLE="FALSE" VARIABLE_SEMANTIC=""><RmTextDataBlock TYPE="TEXT"><![CDATA[
 RenderMonkey 1.71]]></RmTextDataBlock></RmStringVariable>
      <RmStringVariable NAME="BASE_WORKSPACE_PATH" API="" ARTIST_EDITABLE="FALSE" VARIABLE_SEMANTIC=""><RmTextDataBlock TYPE="TEXT"><![CDATA[
-C:\Users\Pope\Documents\Tech Writing\Shader Book\disc\Samples\08_EnvironmentMapping\]]></RmTextDataBlock></RmStringVariable>
+C:\dev\pope\ShaderPrimer\08_EnvironmentMapping\]]></RmTextDataBlock></RmStringVariable>
     </RmRegistryBranch>
    </RmRegistryBranch>
   </RmRegistryBranch>
@@ -1107,20 +1107,12 @@ VS_OUTPUT vs_main( VS_INPUT Input )
    Output.mUV = Input.mUV;
 
    float4 worldPosition = mul( Input.mPosition, gWorldMatrix );
-   float3 lightDir = worldPosition.xyz - gWorldLightPosition.xyz;
-   Output.mLightDir = normalize(lightDir);
+   Output.mLightDir = worldPosition.xyz - gWorldLightPosition.xyz;
+   Output.mViewDir = worldPosition.xyz - gWorldCameraPosition.xyz;
    
-   float3 viewDir = normalize(worldPosition.xyz - gWorldCameraPosition.xyz);
-   Output.mViewDir = viewDir;
-   
-   float3 worldNormal = mul( Input.mNormal, (float3x3)gWorldMatrix );
-   Output.N = normalize(worldNormal);
-   
-   float3 worldTangent = mul(Input.mTangent, (float3x3)gWorldMatrix );
-   Output.T = normalize(worldTangent);
-   
-   float3 worldBinormal = mul(Input.mBinormal, (float3x3)gWorldMatrix );
-   Output.B = normalize(worldBinormal);
+   Output.N = mul( Input.mNormal, (float3x3)gWorldMatrix );
+   Output.T = mul( Input.mTangent, (float3x3)gWorldMatrix );
+   Output.B = mul( Input.mBinormal, (float3x3)gWorldMatrix );
    
    return Output;
 }

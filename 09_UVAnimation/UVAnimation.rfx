@@ -1036,13 +1036,13 @@ Pass 0]]></RmTextDataBlock></RmStringVariable>
     </RmRegistryBranch>
     <RmRegistryBranch NAME="WORKSPACE" API="" XML_VERSION="RenderMonkey 1.71">
      <RmStringVariable NAME="LAST_SAVE" API="" ARTIST_EDITABLE="FALSE" VARIABLE_SEMANTIC=""><RmTextDataBlock TYPE="TEXT"><![CDATA[
-29/12/2010 17:2:31]]></RmTextDataBlock></RmStringVariable>
+5/2/2014 12:52:57]]></RmTextDataBlock></RmStringVariable>
      <RmStringVariable NAME="VERSION" API="" ARTIST_EDITABLE="FALSE" VARIABLE_SEMANTIC=""><RmTextDataBlock TYPE="TEXT"><![CDATA[
 RenderMonkey Version 1.82 (build 322)]]></RmTextDataBlock></RmStringVariable>
      <RmStringVariable NAME="XML_VERSION" API="" ARTIST_EDITABLE="FALSE" VARIABLE_SEMANTIC=""><RmTextDataBlock TYPE="TEXT"><![CDATA[
 RenderMonkey 1.71]]></RmTextDataBlock></RmStringVariable>
      <RmStringVariable NAME="BASE_WORKSPACE_PATH" API="" ARTIST_EDITABLE="FALSE" VARIABLE_SEMANTIC=""><RmTextDataBlock TYPE="TEXT"><![CDATA[
-C:\Users\Pope\Documents\Tech Writing\Shader Book\disc\Samples\09_UVAnimation\]]></RmTextDataBlock></RmStringVariable>
+C:\dev\pope\ShaderPrimer\09_UVAnimation\]]></RmTextDataBlock></RmStringVariable>
     </RmRegistryBranch>
    </RmRegistryBranch>
   </RmRegistryBranch>
@@ -1059,7 +1059,7 @@ C:\Users\Pope\Documents\Tech Writing\Shader Book\disc\Samples\09_UVAnimation\]]>
      <RmDynamicVariableValue ROW_INDEX="2" COLUMN_INDEX="0" VALUE="1.000000"/>
     </RmDynamicVariableValueContainer>
    </RmDynamicVariable>
-   <RmFloatVariable NAME="gTime" API="" ARTIST_EDITABLE="FALSE" VARIABLE_SEMANTIC="Time0_X" VALUE="18.807735" MIN="-1.000000" MAX="1.000000" CLAMP="FALSE"/>
+   <RmFloatVariable NAME="gTime" API="" ARTIST_EDITABLE="FALSE" VARIABLE_SEMANTIC="Time0_X" VALUE="36.506245" MIN="-1.000000" MAX="1.000000" CLAMP="FALSE"/>
    <RmFloatVariable NAME="gWaveHeight" API="" ARTIST_EDITABLE="FALSE" VARIABLE_SEMANTIC="" VALUE="3.000000" MIN="-1.000000" MAX="1.000000" CLAMP="FALSE"/>
    <RmFloatVariable NAME="gSpeed" API="" ARTIST_EDITABLE="FALSE" VARIABLE_SEMANTIC="" VALUE="2.000000" MIN="-1.000000" MAX="1.000000" CLAMP="FALSE"/>
    <RmFloatVariable NAME="gWaveFrequency" API="" ARTIST_EDITABLE="FALSE" VARIABLE_SEMANTIC="" VALUE="10.000000" MIN="-1.000000" MAX="1.000000" CLAMP="FALSE"/>
@@ -1117,10 +1117,10 @@ VS_OUTPUT vs_main( VS_INPUT Input )
    Output.mPosition = mul( Input.mPosition, gWorldMatrix );
 
    float3 lightDir = Output.mPosition.xyz - gWorldLightPosition.xyz;
+   float3 lightDirUnnorm = lightDir;
    lightDir = normalize(lightDir);
    
-   float3 viewDir = normalize(Output.mPosition.xyz - gWorldCameraPosition.xyz);
-   Output.mViewDir = viewDir;
+   Output.mViewDir = Output.mPosition.xyz - gWorldCameraPosition.xyz;
    
    Output.mPosition = mul( Output.mPosition, gViewMatrix );
    Output.mPosition = mul( Output.mPosition, gProjectionMatrix );
@@ -1129,7 +1129,7 @@ VS_OUTPUT vs_main( VS_INPUT Input )
    worldNormal = normalize(worldNormal);
 
    Output.mDiffuse = dot(-lightDir, worldNormal);
-   Output.mReflection = reflect(lightDir, worldNormal);
+   Output.mReflection = reflect(lightDirUnnorm, worldNormal);
 
    Output.mUV = Input.mUV + float2(gTime * gUVSpeed, 0);
    

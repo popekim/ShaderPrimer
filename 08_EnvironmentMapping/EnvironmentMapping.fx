@@ -64,20 +64,12 @@ VS_OUTPUT EnvironmentMapping_Pass_0_Vertex_Shader_vs_main(VS_INPUT Input)
 	Output.mUV = Input.mUV;
 
 	float4 worldPosition = mul(Input.mPosition, gWorldMatrix);
-	float3 lightDir = worldPosition.xyz - gWorldLightPosition.xyz;
-	Output.mLightDir = normalize(lightDir);
+	Output.mLightDir = worldPosition.xyz - gWorldLightPosition.xyz;
+	Output.mViewDir = worldPosition.xyz - gWorldCameraPosition.xyz;
 
-	float3 viewDir = normalize(worldPosition.xyz - gWorldCameraPosition.xyz);
-	Output.mViewDir = viewDir;
-
-	float3 worldNormal = mul(Input.mNormal, (float3x3)gWorldMatrix);
-	Output.N = normalize(worldNormal);
-
-	float3 worldTangent = mul(Input.mTangent, (float3x3)gWorldMatrix);
-	Output.T = normalize(worldTangent);
-
-	float3 worldBinormal = mul(Input.mBinormal, (float3x3)gWorldMatrix);
-	Output.B = normalize(worldBinormal);
+	Output.N = mul(Input.mNormal, (float3x3)gWorldMatrix);
+	Output.T = mul(Input.mTangent, (float3x3)gWorldMatrix);
+	Output.B = mul(Input.mBinormal, (float3x3)gWorldMatrix);
 
 	return Output;
 }

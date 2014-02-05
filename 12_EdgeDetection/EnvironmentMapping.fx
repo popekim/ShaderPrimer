@@ -64,20 +64,12 @@ VS_OUTPUT EnvironmentMapping_Pass_0_Vertex_Shader_vs_main(VS_INPUT Input)
 	Output.mUV = Input.mUV;
 
 	float4 worldPosition = mul(Input.mPosition, gWorldMatrix);
-	float3 lightDir = worldPosition.xyz - gWorldLightPosition.xyz;
-	Output.mLightDir = normalize(lightDir);
+	Output.mLightDir = worldPosition.xyz - gWorldLightPosition.xyz;
+	Output.mViewDir = worldPosition.xyz - gWorldCameraPosition.xyz;
 
-	float3 viewDir = normalize(worldPosition.xyz - gWorldCameraPosition.xyz);
-	Output.mViewDir = viewDir;
-
-	float3 worldNormal = mul(Input.mNormal, (float3x3)gWorldMatrix);
-	Output.N = normalize(worldNormal);
-
-	float3 worldTangent = mul(Input.mTangent, (float3x3)gWorldMatrix);
-	Output.T = normalize(worldTangent);
-
-	float3 worldBinormal = mul(Input.mBinormal, (float3x3)gWorldMatrix);
-	Output.B = normalize(worldBinormal);
+	Output.N = mul(Input.mNormal, (float3x3)gWorldMatrix);
+	Output.T = mul(Input.mTangent, (float3x3)gWorldMatrix);
+	Output.B = mul(Input.mBinormal, (float3x3)gWorldMatrix);
 
 	return Output;
 }
@@ -114,7 +106,7 @@ sampler2D SpecularSampler = sampler_state
 };
 texture NormalMap_Tex
 <
-string ResourceName = "..\\..\\..\\..\\..\\..\\..\\..\\Program Files (x86)\\AMD\\RenderMonkey 1.82\\Examples\\Media\\Textures\\FieldstoneBumpDOT3.tga";
+	string ResourceName = "..\\..\\..\\..\\..\\..\\..\\..\\Program Files (x86)\\AMD\\RenderMonkey 1.82\\Examples\\Media\\Textures\\FieldstoneBumpDOT3.tga";
 >;
 sampler2D NormalSampler = sampler_state
 {
@@ -124,7 +116,7 @@ sampler2D NormalSampler = sampler_state
 };
 texture EnvironmentMap_Tex
 <
-string ResourceName = "..\\..\\..\\..\\..\\..\\..\\..\\Program Files (x86)\\AMD\\RenderMonkey 1.82\\Examples\\Media\\Textures\\Snow.dds";
+	string ResourceName = "..\\..\\..\\..\\..\\..\\..\\..\\Program Files (x86)\\AMD\\RenderMonkey 1.82\\Examples\\Media\\Textures\\Snow.dds";
 >;
 samplerCUBE EnvironmentSampler = sampler_state
 {
